@@ -1,0 +1,281 @@
+question 1:
+#include <iostream>
+using namespace std;
+struct student {
+    string name;
+    string hostel;
+    string branch;
+    int rollno;
+    float cgpa;
+    void adddetails() {
+        cout << "Enter the name: ";
+        getline(cin, name);
+       cout << "Enter the hostel: ";
+        getline(cin, hostel);
+        cout << "Enter the branch: ";
+        getline(cin, branch);
+        cout << "Enter the roll no: ";
+        cin >> rollno;
+        cout << "Enter the CGPA: ";
+        cin >> cgpa;
+        cin.ignore();     }
+    void displaydetails() {
+        cout << "\nStudent Details\n";
+        cout << "Name    : " << name << endl;
+        cout << "Hostel  : " << hostel << endl;
+        cout << "Branch  : " << branch << endl;
+        cout << "Roll No : " << rollno << endl;
+        cout << "CGPA    : " << cgpa << endl;
+    }
+ void updatedetails() {
+        cout << "\nStudent Details\n";
+        cout << " newName    : " << name << endl;
+        cout << "newHostel  : " << hostel << endl;
+        cout << "newBranch  : " << branch << endl;
+        cout << "newRoll No : " << rollno << endl;
+        cout << "newCGPA    : " << cgpa << endl;
+    }
+};
+int main() {
+    int n;
+    cout << "Enter number of students: ";
+    cin >> n;
+    cin.ignore();   
+    student s[n];
+    for (int i = 0; i < n; i++) {
+        cout << "\nEnter details for student " << i + 1 << endl;
+        s[i].adddetails();
+    }
+    for (int i = 0; i < n; i++) {
+        s[i].displaydetails();
+    }
+    return 0;
+}
+question 2:
+#include <iostream>
+using namespace std;
+
+class Student
+{
+private:
+    string name;
+    int rollNo;
+    string degree;
+    string hostel;
+    float cgpa;
+    void checkCGPA()
+    {
+        if (cgpa >= 7.0)
+            cout << "Status: Excellent\n";
+        else if (cgpa >= 5.0)
+            cout << "Status: Good\n";
+        else
+            cout << "Status: Needs Improvement\n";
+    }
+
+public:
+void addDetails()
+    {
+        cout << "Enter Name: ";
+        cin >> name;
+        cout << "Enter Roll Number: ";
+        cin >> rollNo;
+        cout << "Enter Degree: ";
+        cin >> degree;
+        cout << "Enter Hostel: ";
+        cin >> hostel;
+        cout << "Enter Current CGPA: ";
+        cin >> cgpa;
+    }
+    void updateDetails()
+    {
+        cout << "Update Name: ";
+        cin >> name;
+        cout << "Update Degree: ";
+        cin >> degree;
+    }
+    void updateCGPA()
+    {
+        cout << "Enter New CGPA: ";
+        cin >> cgpa;
+    }
+    void updateHostel()
+    {
+        cout << "Enter New Hostel: ";
+        cin >> hostel;
+    }
+    void displayDetails()
+    {
+        cout << "\nStudent Details:\n";
+        cout << "Name: " << name << endl;
+        cout << "Roll No: " << rollNo << endl;
+        cout << "Degree: " << degree << endl;
+        cout << "Hostel: " << hostel << endl;
+        cout << "Current CGPA: " << cgpa << endl;
+        checkCGPA();
+    }
+};
+int main()
+{
+    Student s;
+
+    s.addDetails();        
+    s.displayDetails();    
+    s.updateCGPA();       
+    s.updateHostel();      
+    s.displayDetails();    
+
+    return 0;
+}
+question 3:
+#include <iostream>
+using namespace std;
+class question3
+{
+private:
+    void privateFunction()
+    {
+        cout << "hey!!." << endl;
+    }
+public:
+       void publicFunction()
+    {
+        cout << "hello world." << endl;
+        privateFunction();
+    }
+};
+int main()
+{
+    question3 obj;
+    obj.publicFunction();
+    return 0;
+}
+QUESTION 4
+#include <iostream>
+using namespace std;
+class Rectangle
+{
+private:
+    int width;
+    int height;
+public:
+    void getdata()
+    {
+        cout << "Enter width: ";
+        cin >> width;
+        cout << "Enter height: ";
+        cin >> height;
+    }
+    void calculatearea()
+    {
+        int area = width * height;
+        cout << "Area of rectangle: " << area << endl;
+    }
+};
+int main()
+{ Rectangle rect;
+    rect.getdata();        
+    rect.calculatearea(); 
+    return 0;
+}
+QUESTION 5
+#include <iostream>
+using namespace std;
+class Complex
+{private:
+    float real;
+    float imaginary;
+public:
+    void setComplex(float r, float i)
+    {
+        real = r;
+        imaginary = i;
+    }
+    void displayComplex()
+    {
+        cout << real;
+        if (imaginary >= 0)
+            cout << " + " << imaginary << "i" << endl;
+        else
+            cout << " - " << -imaginary << "i" << endl;
+    }
+    Complex addComplex(Complex c)
+    {
+        Complex temp;
+        temp.real = real + c.real;
+        temp.imaginary = imaginary + c.imaginary;
+        return temp;
+    }
+};
+int main()
+{
+    Complex c1, c2, sum;
+    c1.setComplex(3.5, 2.5);
+    c2.setComplex(1.5, 4.0);
+    cout << "First Complex Number: ";
+    c1.displayComplex();
+    cout << "Second Complex Number: ";
+    c2.displayComplex();
+    sum = c1.addComplex(c2);
+    cout << "Sum of Complex Numbers: ";
+    sum.displayComplex();
+    return 0;
+}
+QUESTION 6:#include <iostream>
+int value = 100;
+class Sample
+{
+private:
+    int value;              
+    static int count;       
+public:
+    Sample(int v)
+    {
+        value = v;
+        count++;
+    }
+    void display();
+};
+int Sample::count = 0;
+void Sample::display()
+{
+   
+    std::cout << "Global value: " << ::value << std::endl;
+    std::cout << "Static count: " << count << std::endl;
+}
+int main()
+{
+    int value;
+    std::cout << "Enter a value: ";
+    std::cin >> value;
+    Sample obj(value);
+    obj.display();
+
+    return 0;
+}
+QUESTION 7:
+#include <iostream>
+using namespace std;
+namespace First
+{ int x = 10;
+    void show()
+    {
+        cout << "First namespace x = " << x << endl;
+    }
+}
+namespace Second
+{
+    int x = 20;
+    void show()
+    {
+        cout << "Second namespace x = " << x << endl;
+    }
+}
+
+int main()
+{
+    First::show();
+    Second::show();
+
+    return 0;
+}

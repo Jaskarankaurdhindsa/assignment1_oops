@@ -1,129 +1,94 @@
- ques1 : 
-#include <iostream>
+ques 1: #include <iostream>
 using namespace std;
-class Animal {
-protected:
-    string name;
-public:
-    Animal(string n) {
-        name = n;
-    }
-void speak() {
-        cout << "The animal makes a sound." << endl;
-    }
-void displayName() {
-        cout << "Animal name: " << name << endl;
-    }
-};
-class Dog : public Animal {
-public:
-    Dog(string n) : Animal(n) {}
 
-    void speak() {
-        cout << name << " says: Woof!" << endl;
-    }
-};
-int main() {
-    Animal animal1("Generic Animal");
-    animal1.displayName();
-    animal1.speak();
-    cout << endl;
-    Dog dog1("Buddy");
-    dog1.displayName();
-    dog1.speak();
-    return 0;
-}
-
-QUES 2: #include <iostream>
-using namespace std;
-class Person {
-protected:
-    int age; 
-public:
-    Person(int a) {
-        age = a;
-    }
-};
-class Student : public Person {
-public:
-    Student(int a) : Person(a) {}
-    void showAge() {
-        cout << "Student age: " << age << endl;
-    }
-};
-int main() {
-    Student s1(19);
-    s1.showAge();
-return 0;
-}
-
-QUESTION 3:#include <iostream>
-using namespace std;
 class Base {
 public:
-    int x = 10;
-protected:
-    int y = 20;
-};
-class PublicDerived : public Base {
-public:
     void show() {
-        cout << "Public Inheritance -> x: " << x << ", y: " << y << endl;
+        cout << "This is Base class" << endl;
     }
 };
-class ProtectedDerived : protected Base {
-public:
-    void show() {
-        cout << "Protected Inheritance -> x: " << x << ", y: " << y << endl;
-    }
-};
-class PrivateDerived : private Base {
-public:
-    void show() {
-        cout << "Private Inheritance -> x: " << x << ", y: " << y << endl;
-    }
-};
-int main() {
-    PublicDerived obj1;
-    obj1.show();
-    cout << "Accessing x from main (Public): " << obj1.x << endl; // ✅ allowed
-    cout << endl;
-    ProtectedDerived obj2;
-    obj2.show();
-      cout << endl;
 
-    PrivateDerived obj3;
-    obj3.show();
-       return 0;
-}
-
-QUESTION 4: (a) SINGLE INHERITANCE :
- #include <iostream>
-using namespace std;
-class J {
+class Derived : public Base {
 public:
-    void show() { cout << "Base Class\n"; }
+    void display() {
+        cout << "This is Derived class" << endl;
+    }
 };
-class A : public J {
-};
+
 int main() {
-    A obj;        
-    obj.show();   
+    Base b;
+    Derived d;
+
+    b.show();
+    d.show();     
+    d.display();
+
     return 0;
 }
 
-(B): MULTIPLE  INHERITANCE:
+QUES 2 : #include <iostream>
+using namespace std;
+
+class Base {
+protected:
+    int x = 10;
+};
+
+class Derived : public Base {
+public:
+    void show() {
+        cout << "Protected variable x = " << x << endl;
+    }
+};
+
+int main() {
+    Derived d;
+    d.show();
+
+    return 0;
+}
+
+QUES 4:
+Single Inheritance
 #include <iostream>
 using namespace std;
 
 class A {
 public:
-    void showA() { cout << "Class A\n"; }
+    void showA() {
+        cout << "Class A" << endl;
+    }
+};
+
+class B : public A {
+public:
+    void showB() {
+        cout << "Class B" << endl;
+    }
+};
+
+int main() {
+    B obj;
+    obj.showA();
+    obj.showB();
+}
+
+Multiple Inheritance
+#include <iostream>
+using namespace std;
+
+class A {
+public:
+    void showA() {
+        cout << "Class A" << endl;
+    }
 };
 
 class B {
 public:
-    void showB() { cout << "Class B\n"; }
+    void showB() {
+        cout << "Class B" << endl;
+    }
 };
 
 class C : public A, public B {
@@ -135,3 +100,279 @@ int main() {
     obj.showB();
 }
 
+Multilevel Inheritance
+#include <iostream>
+using namespace std;
+
+class A {
+public:
+    void showA() {
+        cout << "Class A" << endl;
+    }
+};
+
+class B : public A {
+public:
+    void showB() {
+        cout << "Class B" << endl;
+    }
+};
+
+class C : public B {
+public:
+    void showC() {
+        cout << "Class C" << endl;
+    }
+};
+
+int main() {
+    C obj;
+    obj.showA();
+    obj.showB();
+    obj.showC();
+}
+
+Hierarchical Inheritance
+#include <iostream>
+using namespace std;
+
+class A {
+public:
+    void showA() {
+        cout << "Class A" << endl;
+    }
+};
+
+class B : public A {
+};
+
+class C : public A {
+};
+
+int main() {
+    B obj1;
+    C obj2;
+
+    obj1.showA();
+    obj2.showA();
+}
+
+Hybrid Inheritance
+#include <iostream>
+using namespace std;
+
+class A {
+public:
+    void showA() {
+        cout << "Class A" << endl;
+    }
+};
+
+class B : public A {};
+class C : public A {};
+
+class D : public B, public C {
+};
+
+int main() {
+    D obj;
+    obj.B::showA(); // avoid ambiguity
+    obj.C::showA();
+}
+
+QUES 4 : #include <iostream>
+using namespace std;
+
+class Base {
+public:
+    Base() {
+        cout << "Base Constructor" << endl;
+    }
+    ~Base() {
+        cout << "Base Destructor" << endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    Derived() {
+        cout << "Derived Constructor" << endl;
+    }
+    ~Derived() {
+        cout << "Derived Destructor" << endl;
+    }
+};
+
+int main() {
+    Derived d;
+    return 0;
+}
+QUES 4 : #include <iostream>
+using namespace std;
+
+class Book {
+protected:
+    string title;
+    string author;
+    float price;
+
+public:
+    Book(string t, string a, float p) {
+        title = t;
+        author = a;
+        price = p;
+    }
+
+    void showBook() {
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+        cout << "Price: " << price << endl;
+    }
+};
+
+class Textbook : public Book {
+    string subject;
+
+public:
+    Textbook(string t, string a, float p, string s)
+        : Book(t, a, p) {
+        subject = s;
+    }
+
+    void showTextbook() {
+        showBook();
+        cout << "Subject: " << subject << endl;
+    }
+};
+
+int main() {
+    Textbook tb("C++ Programming", "Bjarne Stroustrup", 599.99, "Computer Science");
+    tb.showTextbook();
+
+    return 0;
+}
+
+QUES 5 :#include <iostream>
+using namespace std;
+
+class Vehicle {
+protected:
+    string make;
+    string model;
+    int year;
+public:
+    Vehicle(string mk, string mdl, int yr) {
+        make = mk;
+        model = mdl;
+        year = yr;
+    }
+    void displayVehicle() {
+        cout << make << endl;
+        cout << model << endl;
+        cout << year << endl;
+    }
+};
+
+class Truck : public Vehicle {
+protected:
+    int load_capacity;
+public:
+    Truck(string mk, string mdl, int yr, int load)
+        : Vehicle(mk, mdl, yr) {
+        load_capacity = load;
+    }
+    void displayTruck() {
+        displayVehicle();
+        cout << load_capacity << endl;
+    }
+};
+
+class RefrigeratedTruck : public Truck {
+    int temperature_control;
+public:
+    RefrigeratedTruck(string mk, string mdl, int yr, int load, int temp)
+        : Truck(mk, mdl, yr, load) {
+        temperature_control = temp;
+    }
+    void display() {
+        displayTruck();
+        cout << temperature_control << endl;
+    }
+};
+
+int main() {
+    RefrigeratedTruck r("Volvo", "FH16", 2022, 20, -5);
+    r.display();
+    return 0;
+}
+
+QUES  :#include <iostream>
+using namespace std;
+
+class Person {
+protected:
+    string name;
+    string address;
+public:
+    Person(string n, string a) {
+        name = n;
+        address = a;
+    }
+    void showPerson() {
+        cout << name << endl;
+        cout << address << endl;
+    }
+};
+
+class Staff : public Person {
+protected:
+    int employee_id;
+    string department;
+public:
+    Staff(string n, string a, int id, string dept)
+        : Person(n, a) {
+        employee_id = id;
+        department = dept;
+    }
+    void showStaff() {
+        showPerson();
+        cout << employee_id << endl;
+        cout << department << endl;
+    }
+};
+
+class Student : public Person {
+protected:
+    int student_id;
+    string grade;
+public:
+    Student(string n, string a, int sid, string g)
+        : Person(n, a) {
+        student_id = sid;
+        grade = g;
+    }
+    void showStudent() {
+        showPerson();
+        cout << student_id << endl;
+        cout << grade << endl;
+    }
+};
+
+class TeachingAssistant : public Staff, public Student {
+public:
+    TeachingAssistant(string n, string a, int id, string dept, int sid, string g)
+        : Person(n, a),
+          Staff(n, a, id, dept),
+          Student(n, a, sid, g) {
+    }
+    void display() {
+        Staff::showStaff();
+        Student::showStudent();
+    }
+};
+
+int main() {
+    TeachingAssistant t("Ali", "Lahore", 101, "CS", 2023, "A");
+    t.display();
+    return 0;
+}

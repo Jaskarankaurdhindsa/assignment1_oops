@@ -1,0 +1,137 @@
+ ques1 : 
+#include <iostream>
+using namespace std;
+class Animal {
+protected:
+    string name;
+public:
+    Animal(string n) {
+        name = n;
+    }
+void speak() {
+        cout << "The animal makes a sound." << endl;
+    }
+void displayName() {
+        cout << "Animal name: " << name << endl;
+    }
+};
+class Dog : public Animal {
+public:
+    Dog(string n) : Animal(n) {}
+
+    void speak() {
+        cout << name << " says: Woof!" << endl;
+    }
+};
+int main() {
+    Animal animal1("Generic Animal");
+    animal1.displayName();
+    animal1.speak();
+    cout << endl;
+    Dog dog1("Buddy");
+    dog1.displayName();
+    dog1.speak();
+    return 0;
+}
+
+QUES 2: #include <iostream>
+using namespace std;
+class Person {
+protected:
+    int age; 
+public:
+    Person(int a) {
+        age = a;
+    }
+};
+class Student : public Person {
+public:
+    Student(int a) : Person(a) {}
+    void showAge() {
+        cout << "Student age: " << age << endl;
+    }
+};
+int main() {
+    Student s1(19);
+    s1.showAge();
+return 0;
+}
+
+QUESTION 3:#include <iostream>
+using namespace std;
+class Base {
+public:
+    int x = 10;
+protected:
+    int y = 20;
+};
+class PublicDerived : public Base {
+public:
+    void show() {
+        cout << "Public Inheritance -> x: " << x << ", y: " << y << endl;
+    }
+};
+class ProtectedDerived : protected Base {
+public:
+    void show() {
+        cout << "Protected Inheritance -> x: " << x << ", y: " << y << endl;
+    }
+};
+class PrivateDerived : private Base {
+public:
+    void show() {
+        cout << "Private Inheritance -> x: " << x << ", y: " << y << endl;
+    }
+};
+int main() {
+    PublicDerived obj1;
+    obj1.show();
+    cout << "Accessing x from main (Public): " << obj1.x << endl; // ✅ allowed
+    cout << endl;
+    ProtectedDerived obj2;
+    obj2.show();
+      cout << endl;
+
+    PrivateDerived obj3;
+    obj3.show();
+       return 0;
+}
+
+QUESTION 4: (a) SINGLE INHERITANCE :
+ #include <iostream>
+using namespace std;
+class J {
+public:
+    void show() { cout << "Base Class\n"; }
+};
+class A : public J {
+};
+int main() {
+    A obj;        
+    obj.show();   
+    return 0;
+}
+
+(B): MULTIPLE  INHERITANCE:
+#include <iostream>
+using namespace std;
+
+class A {
+public:
+    void showA() { cout << "Class A\n"; }
+};
+
+class B {
+public:
+    void showB() { cout << "Class B\n"; }
+};
+
+class C : public A, public B {
+};
+
+int main() {
+    C obj;
+    obj.showA();
+    obj.showB();
+}
+

@@ -1,0 +1,330 @@
+QUES 1:
+#include <iostream>
+using namespace std;
+class Book {
+public:
+    string title;
+    string author;
+    string ISBN;
+};
+class Library {
+private:
+    Book books[100];
+    int count;
+public:
+    Library() {
+        count = 0;
+    }
+    bool addNewBook(string &title, string &author, string &ISBN) {
+        if (count >= 100)
+            return false;
+        books[count].title = title;
+        books[count].author = author;
+        books[count].ISBN = ISBN;
+
+        count++;
+        return true;
+    }
+    bool removeBooks(string &ISBN);
+    void displayDetails() {
+        if (count == 0) {
+            cout << "No books available\n";
+            return;
+        }
+
+        for (int i = 0; i < count; i++) {
+            cout << "Title: " << books[i].title << endl;
+            cout << "Author: " << books[i].author << endl;
+            cout << "ISBN: " << books[i].ISBN << endl;
+        }
+    }
+};
+bool Library::removeBooks(string &ISBN) {
+    for (int i = 0; i < count; i++) {
+        if (books[i].ISBN == ISBN) {
+
+            for (int j = i; j < count - 1; j++) {
+                books[j] = books[j + 1];
+            }
+
+            count--;
+            return true;
+        }
+    }
+    return false;
+}
+int main() {
+    Library lib;
+    string title, author, ISBN;
+    title = "C++ Basics"; author = "Aman"; ISBN = "101";
+    lib.addNewBook(title, author, ISBN);
+
+    title = "Data Structures"; author = "Rahul"; ISBN = "102";
+    lib.addNewBook(title, author, ISBN);
+
+    title = "OOP Concepts"; author = "Simran"; ISBN = "103";
+    lib.addNewBook(title, author, ISBN);
+
+    title = "Algorithms"; author = "Karan"; ISBN = "104";
+    lib.addNewBook(title, author, ISBN);
+
+    title = "Database"; author = "Neha"; ISBN = "105";
+    lib.addNewBook(title, author, ISBN);
+
+    cout << "\nAll Books:\n";
+    lib.displayDetails();
+    string removeISBN = "103";
+
+    if (lib.removeBooks(removeISBN)) {
+        cout << "\nBook removed successfully!\n";
+    } else {
+        cout << "\nBook not found!\n";
+    }
+
+    cout << "\nAfter Removal:\n";
+    lib.displayDetails();
+
+    return 0;
+}
+
+ques2. #include <iostream>
+using namespace std;
+class Book {
+private:
+    string title;
+    string author;
+    string ISBN;
+public:
+      Book() {
+        this->title = "Unknown";
+        this->author = "Unknown";
+        this->ISBN = "0000";
+    }
+    Book(string title, string author, string ISBN) {
+        this->title = title;
+        this->author = author;
+        this->ISBN = ISBN;
+    }
+    Book(const Book &b) {
+        this->title = b.title;
+        this->author = b.author;
+        this->ISBN = b.ISBN;
+    }
+    void displayDetails() {
+        cout << "Title: " << this->title << endl;
+        cout << "Author: " << this->author << endl;
+        cout << "ISBN: " << this->ISBN << endl;
+        cout << "------------------------" << endl;
+    }
+    bool removeBooks(string isbn) {
+        if (this->ISBN == isbn) {
+            this->title = "";
+            this->author = "";
+            this->ISBN = "";
+            return true;
+        }
+        return false;
+    }
+};
+int main() {
+    Book books1[3] = {
+        Book("C++ Basics", "John", "111"),
+        Book("OOP Concepts", "Alice", "222"),
+        Book("Data Structures", "Bob", "333")
+    };
+    cout << " Initializer List Books:\n";
+    for (int i = 0; i < 3; i++) {
+        books1[i].displayDetails();
+    }
+    int n;
+    cout << "\nEnter number of books: ";
+    cin >> n;
+    Book *books2 = new Book[n];
+    for (int i = 0; i < n; i++) {
+        string t, a, isbn;
+        cout << "\nEnter details for book " << i + 1 << endl;
+        cout << "Title: ";
+        cin.ignore();
+        getline(cin, t);
+        cout << "Author: ";
+        getline(cin, a);
+        cout << "ISBN: ";
+        getline(cin, isbn);
+        books2[i] = Book(t, a, isbn);
+    }
+    cout << "\nDynamically Created Books:\n";
+    for (int i = 0; i < n; i++) {
+        books2[i].displayDetails();
+    }
+    string removeISBN;
+    cout << "\nEnter ISBN to remove: ";
+    cin >> removeISBN;
+    bool found = false;
+    for (int i = 0; i < n; i++) {
+        if (books2[i].removeBooks(removeISBN)) {
+            found = true;
+        }
+    }
+    if (found)
+        cout << "Book removed successfully.\n";
+    else
+        cout << "Book not found.\n";
+
+    delete[] books2;
+
+    return 0;
+}
+QUES 3:#include <iostream>
+#include <string>
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+class Account {
+private:
+    const long accountNumber;   
+    long transactionID;
+    string transactionType;
+    double balance;
+    static long nextTransactionID; 
+public:
+    Account(const long accNo, const double bal)
+        : accountNumber(accNo), balance(bal) {
+        transactionID = 0;
+        transactionType = "None";
+    }
+    long depositAmount(const long to, const long from, const double amount) {
+        transactionID = ++nextTransactionID;
+        if (accountNumber == from) {
+            balance -= amount;
+            transactionType = "Debited";
+        }
+        else if (accountNumber == to) {
+            balance += amount;
+            transactionType = "Credited";
+        }
+
+        return transactionID;
+    }
+    long creditAmount(const long to, const long from, const double amount) {
+        transactionID = ++nextTransactionID;
+        if (accountNumber == from) {
+            balance -= amount;
+            transactionType = "Debited";
+        }
+        else if (accountNumber == to) {
+            balance += amount;
+            transactionType = "Credited";
+        }
+        return transactionID;
+    }
+    void displayDetails() const {
+        cout << "Account Number: " << accountNumber << endl;
+        cout << "Balance: " << balance << endl;
+        cout << "Last Transaction ID: " << transactionID << endl;
+        cout << "Transaction Type: " << transactionType << endl;
+        cout << "-----------------------------" << endl;
+    }
+};
+long Account::nextTransactionID = 1000;
+int main() {
+    Account acc[5] = {
+        Account(101, 1000),
+        Account(102, 1500),
+        Account(103, 2000),
+        Account(104, 2500),
+        Account(105, 3000)
+    };
+    cout << "Performing Transactions...\n";
+    long tid;
+    for (int i = 0; i < 5; i++) {
+        tid = acc[i].depositAmount(102, 101, 200);
+    }
+    for (int i = 0; i < 5; i++) {
+        tid = acc[i].creditAmount(104, 103, 300);
+    }
+    cout << "\nTransaction ID: " << tid << endl;
+    cout << "\nAccount Details:\n";
+    for (int i = 0; i < 5; i++) {
+        acc[i].displayDetails();
+    }
+    return 0;
+}
+QUES4 :#include <iostream>
+using std::cout;
+using std::endl;
+class ClassA {
+private:
+    int numA;
+public:
+    ClassA(int a) {
+        numA = a;
+    }
+    friend int addObjects(ClassA, class ClassB);
+};
+class ClassB {
+private:
+    int numB;
+public:
+    ClassB(int b) {
+        numB = b;
+    }
+    friend int addObjects(ClassA, ClassB);
+};
+int addObjects(ClassA objA, ClassB objB) {
+    return objA.numA + objB.numB;
+}
+int main() {
+    ClassA a(10);
+    ClassB b(20);
+
+    int result = addObjects(a, b);
+
+    cout << "Sum of two objects = " << result << endl;
+
+    return 0;
+}
+
+QUES5:#include <iostream>
+
+using std::cout;
+using std::endl;
+class Complex;
+void sum(Complex, Complex);
+class Complex {
+private:
+    double real;
+    double imaginary;
+public:
+    Complex(double r, double i) {
+        real = r;
+        imaginary = i;
+    }
+    Complex(const Complex &c) {
+        real = c.real;
+        imaginary = c.imaginary;
+    }
+    void display() {
+        cout << real << " + " << imaginary << "i" << endl;
+    }
+    friend void sum(Complex, Complex);
+};
+void sum(Complex c1, Complex c2) {
+    double r = c1.real + c2.real;
+    double i = c1.imaginary + c2.imaginary;
+
+    cout << "Sum = " << r << " + " << i << "i" << endl;
+}
+int main() {
+    Complex c1(2.5, 3.5);
+    Complex c2(1.5, 2.5);
+    Complex c3 = c1;
+    cout << "Complex Number 1: ";
+    c1.display();
+    cout << "Complex Number 2: ";
+    c2.display();
+    cout << "Copied Complex Number: ";
+    c3.display();
+    sum(c1, c2);
+    return 0;
+}

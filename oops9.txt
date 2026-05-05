@@ -1,0 +1,283 @@
+QUES 1 #include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream file("NUM.TXT");  // create and open file
+
+    if (!file) {
+        cout << "Error creating file!" << endl;
+        return 1;
+    }
+
+    for (int i = 1; i <= 200; i++) {
+        file << i << endl;  // write number to file
+    }
+
+    file.close();  // close the file
+    cout << "Numbers written to NUM.TXT successfully." << endl;
+
+    return 0;
+}
+
+QUES 2#include <iostream>
+#include <fstream>
+#include <cctype>   // for isalpha()
+using namespace std;
+
+// user-defined function
+void countAlphabets() {
+    ifstream file("NOTES.TXT");  // open file for reading
+    char ch;
+    int count = 0;
+
+    if (!file) {
+        cout << "File not found!" << endl;
+        return;
+    }
+
+    while (file.get(ch)) {   // read character by character
+        if (isalpha(ch)) {   // check if alphabet
+            count++;
+        }
+    }
+
+    file.close();
+    cout << "Number of alphabets: " << count << endl;
+}
+
+int main() {
+    countAlphabets();  // function call
+    return 0;
+}
+
+QUES 3 #include <iostream>
+#include <fstream>
+using namespace std;
+
+class Student {
+public:
+    int roll;
+    char name[30];
+
+    void getData() {
+        cout << "Enter roll number: ";
+        cin >> roll;
+        cout << "Enter name: ";
+        cin >> name;
+    }
+
+    void showData() {
+        cout << "Roll No: " << roll << endl;
+        cout << "Name: " << name << endl;
+    }
+};
+
+int main() {
+    Student s1;
+
+    // ---- Writing object to binary file ----
+    s1.getData();
+
+    ofstream outFile("student.dat", ios::binary);
+    outFile.write((char*)&s1, sizeof(s1));
+    outFile.close();
+
+    cout << "\nData written to file successfully.\n";
+
+    // ---- Reading object from binary file ----
+    Student s2;
+
+    ifstream inFile("student.dat", ios::binary);
+    inFile.read((char*)&s2, sizeof(s2));
+    inFile.close();
+
+    cout << "\nData read from file:\n";
+    s2.showData();
+
+    return 0;
+}
+
+QUES 4 #include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ifstream inFile("source.txt");   // file to read from
+    ofstream outFile("destination.txt"); // file to write to
+
+    if (!inFile) {
+        cout << "Source file not found!" << endl;
+        return 1;
+    }
+
+    char ch;
+
+    // copy character by character
+    while (inFile.get(ch)) {
+        outFile.put(ch);
+    }
+
+    inFile.close();
+    outFile.close();
+
+    cout << "File copied successfully!" << endl;
+
+    return 0;
+}
+
+QUES 5:#include <iostream>
+#include <fstream>
+#include <cstring>   // for strlen()
+using namespace std;
+
+int main() {
+    char str[100];
+
+    // 1. Input string
+    cout << "Enter a string: ";
+    cin.getline(str, 100);
+
+    // 2. Calculate length
+    int length = strlen(str);
+    cout << "Length of string: " << length << endl;
+
+    // 3. Store string in file
+    ofstream outFile("text.txt");
+    outFile << str;
+    outFile.close();
+
+    cout << "String stored in file successfully.\n";
+
+    // 4. Fetch string from file
+    char readStr[100];
+
+    ifstream inFile("text.txt");
+    inFile.getline(readStr, 100);
+    inFile.close();
+
+    cout << "String read from file: " << readStr << endl;
+
+    return 0;
+}
+
+QUES6:(a) #include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream out("alpha.txt");
+
+    for (char ch = 'A'; ch <= 'Z'; ch++) {
+        out << ch;
+    }
+    out.close();
+
+    ifstream in("alpha.txt");
+
+    in.seekg(9, ios::beg); // 10th character (index starts from 0)
+    char ch;
+    in.get(ch);
+
+    cout << "10th character: " << ch << endl;
+
+    in.close();
+    return 0;
+}
+
+b)#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    fstream file("numbers.txt", ios::in | ios::out);
+
+    file.seekp(4, ios::beg); // 5th position (0-based)
+    file.put('9'); // overwrite with 9
+
+    file.close();
+    return 0;
+}
+c)#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ifstream file("alpha.txt", ios::ate);
+
+    cout << "File size: " << file.tellg() << " bytes" << endl;
+
+    file.close();
+    return 0;
+}
+d)#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ifstream file("alpha.txt", ios::ate);
+
+    file.seekg(-1, ios::end); // move to last character
+
+    char ch;
+    file.get(ch);
+
+    cout << "Last character: " << ch << endl;
+
+    file.close();
+    return 0;
+}
+e)#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream out("data.txt");
+    out << "Hello World Programming Example";
+    out.close();
+
+    ifstream in("data.txt");
+
+    // i. move to 10th byte
+    in.seekg(9, ios::beg);
+
+    // ii. show position
+    cout << "Current position: " << in.tellg() << endl;
+
+    // iii. read remaining content
+    char ch;
+    cout << "Remaining content: ";
+    while (in.get(ch)) {
+        cout << ch;
+    }
+
+    in.close();
+    return 0;
+}
+f)#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    fstream file("hello.txt", ios::out);
+
+    string text = "HelloWorld";
+
+    // i + ii: write and show tellp
+    for (int i = 0; i < text.length(); i++) {
+        file << text[i];
+        cout << "Position: " << file.tellp() << endl;
+    }
+
+    file.close();
+
+    // iii: replace "World" with "C++"
+    file.open("hello.txt", ios::in | ios::out);
+
+    file.seekp(5, ios::beg); // start of "World"
+    file << "C++";
+
+    file.close();
+
+    return 0;
+}

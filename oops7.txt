@@ -1,0 +1,307 @@
+QUES 1:#include <iostream>
+using namespace std;
+
+class Polygon {
+protected:
+    int width, height;
+public:
+    void set_value(int a, int b) { width = a; height = b; }
+    virtual void calculate_area() = 0; // Pure virtual function
+};
+
+class Rectangle : public Polygon {
+public:
+    void calculate_area() { cout << "Rectangle Area: " << width * height << endl; }
+};
+
+class Triangle : public Polygon {
+public:
+    void calculate_area() { cout << "Triangle Area: " << 0.5 * width * height << endl; }
+};
+
+int main() {
+    Rectangle rect;
+    Triangle tri;
+    Polygon* p1 = &rect;
+    Polygon* p2 = &tri;
+    
+    p1->set_value(10, 5);
+    p1->calculate_area();
+    
+    p2->set_value(10, 5);
+    p2->calculate_area();
+    
+    return 0;
+}
+
+CLASS 2:#include <iostream>
+#include <string>
+using namespace std;
+
+class Shape {
+public:
+    virtual void area() = 0;
+    virtual void display() = 0;
+};
+
+class Circle : public Shape {
+    float r;
+public:
+    Circle(float rad) : r(rad) {}
+    void area() { cout << "Area: " << 3.14 * r * r << endl; }
+    void display() { cout << "Shape: Circle, Radius: " << r << endl; }
+};
+
+class Rectangle : public Shape {
+    float l, w;
+public:
+    Rectangle(float len, float wid) : l(len), w(wid) {}
+    void area() { cout << "Area: " << l * w << endl; }
+    void display() { cout << "Shape: Rectangle, L: " << l << " W: " << w << endl; }
+};
+
+int main() {
+    Circle c(5);
+    Rectangle r(4, 6);
+    c.display(); c.area();
+    r.display(); r.area();
+    return 0;
+}
+
+QUES 3:#include <iostream>
+#include <cmath>
+using namespace std;
+
+void area(double b, double h) {
+    cout << "Right Angle Triangle Area: " << 0.5 * b * h << endl;
+}
+
+void area(double s) {
+    cout << "Equilateral Triangle Area: " << (sqrt(3)/4) * s * s << endl;
+}
+
+void area(double a, double b, char type) {
+    double h = sqrt(pow(a, 2) - pow(b, 2) / 4);
+    cout << "Isosceles Triangle Area: " << 0.5 * b * h << endl;
+}
+
+int main() {
+    area(10.0, 5.0);        // Right angle
+    area(6.0);              // Equilateral
+    area(5.0, 4.0, 'i');    // Isosceles
+    return 0;
+}
+QUES 4:#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    virtual void process() = 0;
+};
+
+class Engineering : public Student {
+public:
+    void process() { cout << "Processing Engineering Student..." << endl; }
+};
+
+class Medicine : public Student {
+public:
+    void process() { cout << "Processing Medicine Student..." << endl; }
+};
+
+class Science : public Student {
+public:
+    void process() { cout << "Processing Science Student..." << endl; }
+};
+
+int main() {
+    Student* list[3];
+    list[0] = new Engineering();
+    list[1] = new Medicine();
+    list[2] = new Science();
+
+    for(int i=0; i<3; i++) {
+        list[i]->process();
+        delete list[i];
+    }
+    return 0;
+}
+
+QUES 5:#include <iostream>
+using namespace std;
+
+class Time {
+    int h, m, s;
+public:
+    Time(int hr=0, int min=0, int sec=0) : h(hr), m(min), s(sec) {}
+    Time operator+(const Time& t) {
+        int total_s = s + t.s;
+        int total_m = m + t.m + (total_s / 60);
+        int total_h = h + t.h + (total_m / 60);
+        return Time(total_h, total_m % 60, total_s % 60);
+    }
+    void show() { printf("%02d:%02d:%02d\n", h, m, s); }
+};
+
+int main() {
+    Time t1(5, 15, 34), t2(9, 53, 58), t3;
+    t3 = t1 + t2;
+    t3.show();
+    return 0;
+}
+
+QUES 6:#include <iostream>
+#include <cstring>
+using namespace std;
+
+class STRING {
+    char str[100];
+public:
+    STRING(const char* s = "") { strcpy(str, s); }
+    bool operator==(STRING s) { return strcmp(str, s.str) == 0; }
+    STRING operator+(STRING s) {
+        STRING temp;
+        strcpy(temp.str, str);
+        strcat(temp.str, s.str);
+        return temp;
+    }
+    void display() { cout << str << endl; }
+};
+
+int main() {
+    STRING s1("Hello "), s2("World");
+    STRING s3 = s1 + s2;
+    s3.display();
+    if(s1 == s2) cout << "Equal"; else cout << "Not Equal";
+    return 0;
+}
+QUES 7:#include <iostream>
+using namespace std;
+
+class Matrix {
+    int mat[2][2];
+public:
+    void input() {
+        for(int i=0; i<2; i++)
+            for(int j=0; j<2; j++) cin >> mat[i][j];
+    }
+    void display() {
+        for(int i=0; i<2; i++) {
+            for(int j=0; j<2; j++) cout << mat[i][j] << " ";
+            cout << endl;
+        }
+    }
+    friend Matrix operator*(Matrix m1, Matrix m2);
+};
+
+Matrix operator*(Matrix m1, Matrix m2) {
+    Matrix res;
+    for(int i=0; i<2; i++)
+        for(int j=0; j<2; j++) {
+            res.mat[i][j] = 0;
+            for(int k=0; k<2; k++)
+                res.mat[i][j] += m1.mat[i][k] * m2.mat[k][j];
+        }
+    return res;
+}
+
+int main() {
+    Matrix a, b, c;
+    cout << "Enter Matrix A (2x2): "; a.input();
+    cout << "Enter Matrix B (2x2): "; b.input();
+    c = a * b;
+    cout << "Result:\n"; c.display();
+    return 0;
+}
+QUES8:#include <iostream>
+using namespace std;
+
+class SafeArray {
+    int a[5];
+public:
+    SafeArray() { for(int i=0; i<5; i++) a[i] = i*10; }
+    int& operator[](int i) {
+        if(i < 0 || i >= 5) {
+            cout << "Index Out of Bounds!" << endl;
+            exit(1);
+        }
+        return a[i];
+    }
+};
+
+int main() {
+    SafeArray arr;
+    cout << arr[2] << endl;
+    cout << arr[10]; // This will trigger the error
+    return 0;
+}
+QUES 10:#include <iostream>
+using namespace std;
+
+class Distance {
+    int feet, inches;
+public:
+    friend istream& operator>>(istream& input, Distance& d) {
+        input >> d.feet >> d.inches;
+        return input;
+    }
+    friend ostream& operator<<(ostream& output, const Distance& d) {
+        output << "F: " << d.feet << " I: " << d.inches;
+        return output;
+    }
+};
+
+int main() {
+    Distance d1;
+    cout << "Enter feet and inches: ";
+    cin >> d1;
+    cout << "You entered: " << d1 << endl;
+    return 0;
+}
+QUES 11,12:#include <iostream>
+using namespace std;
+
+class Test {
+    float val;
+public:
+    Test(float f) : val(f) {} // Float to Object
+    operator float() { return val; } // Object to Float
+    void show() { cout << "Value: " << val << endl; }
+};
+
+int main() {
+    Test obj = 15.5f; // Basic to UDT
+    obj.show();
+    float f = obj;    // UDT to Basic
+    cout << "Float: " << f << endl;
+    return 0;
+}
+QUES 13:#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Polar {
+    float r, a;
+public:
+    Polar(float rad, float ang) : r(rad), a(ang) {}
+    float getR() { return r; }
+    float getA() { return a; }
+};
+
+class Cartesian {
+    float x, y;
+public:
+    Cartesian(float x1=0, float y1=0) : x(x1), y(y1) {}
+    Cartesian(Polar p) {
+        x = p.getR() * cos(p.getA());
+        y = p.getR() * sin(p.getA());
+    }
+    void show() { cout << "X: " << x << ", Y: " << y << endl; }
+};
+
+int main() {
+    Polar p(10, 0.785); // 0.785 rad = 45 deg
+    Cartesian c = p;
+    c.show();
+    return 0;
+}
